@@ -1,2 +1,190 @@
-<h1>hello<h1>
-<button> Click me!!!!!</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joel · Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blush: #fbeff1;
+      --rose: #c9576f;
+      --deep: #5a1f2e;
+      --gold: #c8a26b;
+      --ink: #3d2a2f;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      color: var(--ink);
+      background: linear-gradient(160deg, #fff7f8 0%, var(--blush) 50%, #f6dfe4 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Floating petals */
+    .petal {
+      position: fixed; top: -40px; z-index: 0; pointer-events: none;
+      color: var(--rose); opacity: .35;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(360deg); }
+    }
+
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 10;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 8vw;
+      background: rgba(255, 247, 248, .7); backdrop-filter: blur(10px);
+    }
+    nav .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-style: italic; color: var(--deep); }
+    nav a { margin-left: 28px; color: var(--ink); text-decoration: none; font-size: .9rem; letter-spacing: .12em; text-transform: uppercase; }
+    nav a:hover { color: var(--rose); }
+
+    section { position: relative; z-index: 1; padding: 120px 8vw; max-width: 1100px; margin: 0 auto; }
+
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+    .hero small { letter-spacing: .4em; text-transform: uppercase; color: var(--gold); font-size: .8rem; }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif; font-weight: 400;
+      font-size: clamp(3.5rem, 10vw, 7.5rem); line-height: 1;
+      color: var(--deep); margin: 18px 0 10px;
+    }
+    .hero h1 em { color: var(--rose); }
+    .hero p { font-size: 1.15rem; max-width: 520px; line-height: 1.8; margin-bottom: 40px; }
+
+    .btn {
+      font-family: 'Jost', sans-serif; font-size: .95rem; letter-spacing: .15em; text-transform: uppercase;
+      padding: 16px 42px; border: none; border-radius: 999px; cursor: pointer;
+      color: #fff; background: linear-gradient(135deg, var(--rose), var(--deep));
+      box-shadow: 0 10px 30px rgba(201, 87, 111, .35);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 14px 40px rgba(201, 87, 111, .5); }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 3rem;
+      color: var(--deep); margin-bottom: 12px;
+    }
+    .divider { width: 60px; height: 1px; background: var(--gold); margin-bottom: 40px; }
+
+    .about { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: center; }
+    .portrait {
+      aspect-ratio: 4/5; border-radius: 200px 200px 20px 20px;
+      background: linear-gradient(160deg, #f3c6cf, var(--rose));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif; font-size: 6rem; font-style: italic; color: #fff;
+      box-shadow: 0 30px 60px rgba(90, 31, 46, .2);
+    }
+    .about p { line-height: 1.9; margin-bottom: 18px; font-size: 1.05rem; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; }
+    .card {
+      background: rgba(255, 255, 255, .65); border: 1px solid rgba(201, 87, 111, .15);
+      border-radius: 20px; padding: 36px 30px; backdrop-filter: blur(6px);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(90, 31, 46, .12); }
+    .card span { font-size: 1.8rem; }
+    .card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; color: var(--deep); margin: 14px 0 8px; }
+    .card p { line-height: 1.7; font-size: .95rem; }
+
+    .contact { text-align: center; }
+    .contact .divider { margin: 0 auto 30px; }
+    .contact p { font-size: 1.1rem; margin-bottom: 36px; }
+
+    footer { position: relative; z-index: 1; text-align: center; padding: 40px; font-size: .85rem; color: #9b7d84; }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; }
+    .reveal.show { opacity: 1; transform: none; }
+
+    @media (max-width: 760px) {
+      .about { grid-template-columns: 1fr; }
+      nav a { margin-left: 16px; font-size: .75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Joel</div>
+    <div>
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <small>Welcome</small>
+    <h1>hello, I'm <em>Joel</em></h1>
+    <p>I make thoughtful work with care, curiosity and a little bit of heart.</p>
+    <button class="btn" onclick="document.getElementById('about').scrollIntoView()">Click me ♡</button>
+  </section>
+
+  <section id="about" class="about reveal">
+    <div class="portrait">J</div>
+    <div>
+      <h2>About me</h2>
+      <div class="divider"></div>
+      <p>Hi, I'm Joel. I believe the best work comes from paying attention: to people, to details, and to the small moments that make something feel right.</p>
+      <p>Replace this with a few lines about who you are, what you do, and what you love.</p>
+    </div>
+  </section>
+
+  <section id="work" class="reveal">
+    <h2>Selected work</h2>
+    <div class="divider"></div>
+    <div class="grid">
+      <div class="card">
+        <span>🌹</span>
+        <h3>Project One</h3>
+        <p>A short description of what you made, why it matters, and what you're proud of.</p>
+      </div>
+      <div class="card">
+        <span>💌</span>
+        <h3>Project Two</h3>
+        <p>Another piece of work. Swap in your own titles, links and details.</p>
+      </div>
+      <div class="card">
+        <span>✨</span>
+        <h3>Project Three</h3>
+        <p>Something recent you'd love people to see first.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact reveal">
+    <h2>Let's talk</h2>
+    <div class="divider"></div>
+    <p>Have something in mind? I'd love to hear from you.</p>
+    <button class="btn" onclick="location.href='mailto:you@example.com'">Say hello ♡</button>
+  </section>
+
+  <footer>Made with ♡ by Joel</footer>
+
+  <script>
+    // Falling hearts & petals
+    const symbols = ['♡', '❀', '✿', '♥'];
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.textContent = symbols[i % symbols.length];
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.fontSize = 12 + Math.random() * 18 + 'px';
+      p.style.animationDuration = 10 + Math.random() * 14 + 's';
+      p.style.animationDelay = -Math.random() * 20 + 's';
+      document.body.appendChild(p);
+    }
+
+    // Fade sections in on scroll
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => e.isIntersecting && e.target.classList.add('show'));
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
